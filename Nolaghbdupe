@@ -1,32 +1,31 @@
---// XbhvScript GUI System
--- โหลดหน้า Intro แล้วขึ้นเมนูให้เลือก Script
--- ทำงานได้ใน Delta / Fluxus / Arceus X
+--// Custom Loading Screen + Logo + Auto Execute Script
+-- ใช้งานได้ใน Delta / Fluxus / Arceus X
 
 local player = game.Players.LocalPlayer
-local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-gui.Name = "XbhvScriptUI"
+local gui = Instance.new("ScreenGui")
+gui.Name = "XbhvLoadingScreen"
 gui.ResetOnSpawn = false
-gui.IgnoreGuiInset = true
+gui.Parent = player:WaitForChild("PlayerGui")
 
-----------------------------------------------------
--- 🟣 ขั้นที่ 1 : หน้าโหลด (Loading Screen)
-----------------------------------------------------
+-- พื้นหลัง
 local bg = Instance.new("Frame")
 bg.Size = UDim2.new(1, 0, 1, 0)
-bg.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+bg.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+bg.BackgroundTransparency = 0.2
 bg.Parent = gui
 
+-- ✅ โลโก้ (ใส่ asset id ของคุณตรงนี้)
 local logo = Instance.new("ImageLabel")
 logo.Size = UDim2.new(0, 120, 0, 120)
 logo.Position = UDim2.new(0.02, 0, 0.02, 0)
 logo.BackgroundTransparency = 1
-logo.Image = "rbxassetid://99886075120523"
+logo.Image = "rbxassetid://PUT_YOUR_IMAGE_ID_HERE" -- <<<<< แก้ตรงนี้
 logo.Parent = bg
 
+-- ข้อความหลัก
 local title = Instance.new("TextLabel")
-title.AnchorPoint = Vector2.new(0.5, 0.5)
-title.Position = UDim2.new(0.5, 0, 0.45, 0)
-title.Size = UDim2.new(0.8, 0, 0.1, 0)
+title.Size = UDim2.new(1, 0, 0, 50)
+title.Position = UDim2.new(0, 0, 0.35, 0)
 title.BackgroundTransparency = 1
 title.Text = "Youtube: XbhvScript"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -34,6 +33,52 @@ title.Font = Enum.Font.GothamBold
 title.TextScaled = true
 title.Parent = bg
 
+-- ข้อความรอง
+local sub = Instance.new("TextLabel")
+sub.Size = UDim2.new(1, 0, 0, 30)
+sub.Position = UDim2.new(0, 0, 0.42, 0)
+sub.BackgroundTransparency = 1
+sub.Text = "Subscribe To XbhvScript"
+sub.TextColor3 = Color3.fromRGB(200, 200, 200)
+sub.Font = Enum.Font.Gotham
+sub.TextScaled = true
+sub.Parent = bg
+
+-- ฟีเจอร์
+local feat = Instance.new("TextLabel")
+feat.Size = UDim2.new(1, 0, 0, 30)
+feat.Position = UDim2.new(0, 0, 0.47, 0)
+feat.BackgroundTransparency = 1
+feat.Text = "Instant Steal | Bypass SAB"
+feat.TextColor3 = Color3.fromRGB(255, 100, 150)
+feat.Font = Enum.Font.GothamBold
+feat.TextScaled = true
+feat.Parent = bg
+
+-- Progress Bar
 local barBg = Instance.new("Frame")
-barBg.AnchorPoint = Vector2.new(0.5, 0.5)
-barBg.Position = U
+barBg.Size = UDim2.new(0.6, 0, 0.03, 0)
+barBg.Position = UDim2.new(0.2, 0, 0.6, 0)
+barBg.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+barBg.BorderSizePixel = 0
+barBg.Parent = bg
+
+local fill = Instance.new("Frame")
+fill.Size = UDim2.new(0, 0, 1, 0)
+fill.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
+fill.BorderSizePixel = 0
+fill.Parent = barBg
+
+-- แถบโหลดเคลื่อนไหว
+for i = 0, 1, 0.02 do
+	fill.Size = UDim2.new(i, 0, 1, 0)
+	wait(0.03)
+end
+
+wait(0.5)
+gui:Destroy()
+
+-- ✅ หลังโหลดเสร็จ: รันสคริปต์จาก URL
+pcall(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/kaisudlnw/Sss/refs/heads/main/Ssss"))()
+end)
